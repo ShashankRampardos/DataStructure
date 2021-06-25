@@ -12,8 +12,8 @@ void printArrayElement(int index,struct ArrayAdt*);
 
 void editArray(int index,int data,struct ArrayAdt *);
 int countArray(struct ArrayAdt*);
-void appendElement(int index,int value,struct ArrayAdt*);
-void searctElement(int data,struct ArrayAdt*);
+void appendElement(int data,struct ArrayAdt*);
+void searchElement(int data,struct ArrayAdt*);
 ///Remember:Avoid Global Declaration of variable most of the time.
 struct ArrayAdt///we could use typedef also
 {
@@ -99,12 +99,12 @@ int countArray(struct ArrayAdt* a)
      return (a->lastIndex+1);
 }
 ///--------------------------------
-void appendElement(int index,int value,struct ArrayAdt* a)
+void appendElement(int data,struct ArrayAdt* a)
 {
-    int data=a->p[index];
-
+     a->p[a->lastIndex+1]=data;
+     a->lastIndex++;
 }
-void searctElement(int data,struct ArrayAdt *a)
+void searchElement(int data,struct ArrayAdt *a)
 {   short judge=0;
     for(int i=0;i<a->lastIndex+1;i++)
     {
@@ -118,10 +118,9 @@ void searctElement(int data,struct ArrayAdt *a)
 }
 int main()
 {
-struct ArrayAdt *a=createArray(100);
+struct ArrayAdt *const a=createArray(100);
 //insertArray(0,43,a);
 //displayAllArray(a);
-
 while(1)
 {
 
@@ -129,29 +128,31 @@ while(1)
     short list;
     int data,index;
 
-    printf("Total Array Elements:%d Address:%u",countArray(a),a);///At this point "a" pointer value is same(unchanged & secure)
+    printf("Total Array Elements:%d",countArray(a));///At this point "a" pointer value is same(unchanged & secure)///(problem solved)
     printf("\n1.Insert Array Element");
     printf("\n2.Display All Array Elements");
     printf("\n3.Print Array Element");
     printf("\n4.Update Array Element");
     printf("\n5.Delete Array Element");
+    printf("\n6.Search Array Element");
+    printf("\n7.Append Element");
+    printf("\n8.Exit");
 
-    printf("\n6.Exit");
-
-printf("Total Array Elements:%d Address:%u",countArray(a),a);///At this point a pointer value is same(unchanged & secure) also.
+///printf("Total Array Elements:%d Address:%u",countArray(a),a);///At this point a pointer value is same(unchanged & secure) also.///(problem solved)
     printf("\n\nChoose Operation(Enter List number):");
-    list=1;///if I Hard quote list(switch variable) then no problem but, if I uncomment below scanf(); statement then "a" pointer value gets corrupted
-    ///scanf("%d",&list);
-printf("Total Array Elements:%d Address:%u",countArray(a),a);///Now this line will display corrupted "a" pointer value which proves that line 144 creating problems, value is corrupted by scanf() in line number 144
+    ///list=1;///if I Hard quote list(switch variable) then no problem but, if I uncomment below scanf(); statement then "a" pointer value gets corrupted///(problem solved)
+    scanf("%hi",&list);///I written wrong formate specifier of short int as %d instead of %hi which caused program to crash(value of "a" pointer gets corrupted).
+    ///changed formate specifier
+///printf("Total Array Elements:%d Address:%u",countArray(a),a);///Now this line will display corrupted "a" pointer value which proves that line 144 creating problems, value is corrupted by scanf() in line number 144
     switch(list)
     {
     case 1:
 
         printf("Enter Array Index and Array Data");
         scanf("%d%d",&index,&data);
-        printf("Total Array Elements:%d Address:%u",countArray(a),a);
+        //printf("Total Array Elements:%d Address:%u",countArray(a),a);
         insertArray(index,data,a);
-        displayAllArray(a);
+        //displayAllArray(a);
         break;
     case 2:
         printf("Array Elements:");
@@ -175,17 +176,23 @@ printf("Total Array Elements:%d Address:%u",countArray(a),a);///Now this line wi
         deleteArrayElement(index,a);
         break;
     case 6:
+        printf("Enter value to search in:");
+        scanf("%d",&data);
+        searchElement(data,a);
+        break;
+    case 7:
+        printf("Enter value to append data in array:");
+        scanf("%d",&data);
+        appendElement(data,a);
+        break;
+    case 8:
         getch();
         exit(0);
     default:
-        printf("Enter Value 1 to 5");
-
+        printf("Enter Value 1 to 8");
     }
   getch();
   system("cls");
-
-
-
 }
   /*insertArray(0,111);
     insertArray(1,112);
@@ -198,5 +205,4 @@ printf("Total Array Elements:%d Address:%u",countArray(a),a);///Now this line wi
     deleteArrayElement(2);
     displayAllArray();
     printArrayElement(7);*/
-
 }
