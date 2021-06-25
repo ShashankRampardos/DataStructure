@@ -117,17 +117,17 @@ void searchElement(int data,struct ArrayAdt *a)
         printf("Item not Found");
 }
 int main()
-{
-struct ArrayAdt *const a=createArray(100);
+{  int n;
+    printf("Enter size of Array:");
+    scanf("%d",&n);
+struct ArrayAdt *const a=createArray(n);
 //insertArray(0,43,a);
 //displayAllArray(a);
 while(1)
 {
 
-
     short list;
     int data,index;
-
     printf("Total Array Elements:%d",countArray(a));///At this point "a" pointer value is same(unchanged & secure)///(problem solved)
     printf("\n1.Insert Array Element");
     printf("\n2.Display All Array Elements");
