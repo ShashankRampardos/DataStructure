@@ -120,6 +120,7 @@ int main()
 {  int n;
     printf("Enter size of Array:");
     scanf("%d",&n);
+ system("cls");
 struct ArrayAdt *const a=createArray(n);
 //insertArray(0,43,a);
 //displayAllArray(a);
