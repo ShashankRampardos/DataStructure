@@ -186,6 +186,7 @@ while(1)
         appendElement(data,a);
         break;
     case 8:
+        free(a);  
         getch();
         exit(0);
     default:
