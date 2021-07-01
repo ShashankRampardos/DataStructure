@@ -1,13 +1,14 @@
 #include<stdio.h>
 #include<conio.h>
 #include<stdlib.h>
+#include<string.h>
 ///Grow Able and Shrink Able Array DataStructure
 
-struct DynamicArray* createArray(int capacity);
+struct DynamicArray* createArray();
 void deleteArrayElement(int index,struct DynamicArray*);
 void insertArray(int index,int data,struct DynamicArray *a);
 void displayAllArray(struct DynamicArray*);
-void printArrayElement(int index,struct DynamicArray*);
+int getElement(int index,struct DynamicArray*);
 void editArray(int index,int data,struct DynamicArray *);
 int countArray(struct DynamicArray*);
 void appendElement(int data,struct DynamicArray*);
@@ -22,11 +23,11 @@ struct DynamicArray///we could use typedef also
    int lastIndex;
 };
 ///---------------------------------------------
-struct DynamicArray* createArray(int capacity)
+struct DynamicArray* createArray()
 {
   struct DynamicArray *A=(struct DynamicArray*)malloc(sizeof(struct DynamicArray));
-  A->capacity=capacity;
-  A->p=(int*)malloc(sizeof(int)*capacity);
+  A->capacity=10;
+  A->p=(int*)malloc(sizeof(int)*10);
   A->lastIndex=-1;
 
   return A;
@@ -62,7 +63,7 @@ void deleteArrayElement(int index,struct DynamicArray *a)
     }
     a->lastIndex--;
      }
-    if(a->lastIndex+1==a->capacity/2)
+    if(a->lastIndex+1==a->capacity/2&&a->capacity>1)///if we write (a->lastIndex<a->capacity/2) halfArray() will be called unnecessarily initially
         halfArray(a);
 
 }
@@ -71,20 +72,22 @@ void displayAllArray(struct DynamicArray *a)
 {
 
     if(a->lastIndex==-1)
-    printf("Array is Empty");
-    printf("\n");
+    printf("\nArray is Empty");
+    else{
+    printf("\nArrayElements: ");
     for(int i=0;i<a->lastIndex+1;i++)
     {
-        printf("%d ",a->p[i]);
+        printf("%d ",getElement(i,a));
+    }
     }
 }
 ///-------------------------------------------
-void printArrayElement(int index,struct DynamicArray *a)
+int getElement(int index,struct DynamicArray *a)
 {
     if(index<0||index<=a->lastIndex)
-    printf("\n%d ",a->p[index]);
+    return a->p[index];
     else
-    printf("\nInvalidIndexOfArray");
+    return -1;
 }
 ///------------------------------------------
 void editArray(int index,int data,struct DynamicArray *a)
@@ -144,10 +147,10 @@ void halfArray(struct DynamicArray* a)
 }
 int main()
 {  int n;
-    printf("Enter size of Array:");
-    scanf("%d",&n);
-    system("cls");
-struct DynamicArray *const a=createArray(n);
+    //printf("Enter size of Array:");
+    //scanf("%d",&n);
+    //system("cls");
+struct DynamicArray *const a=createArray();
 
 while(1)
 {
@@ -155,14 +158,14 @@ while(1)
     short list;
     int data,index;
     printf("Total Array Elements:%d",countArray(a));
+        displayAllArray(a);
     printf("\n1.Insert Array Element");
-    printf("\n2.Display All Array Elements");
-    printf("\n3.Print Array Element");
-    printf("\n4.Update Array Element");
-    printf("\n5.Delete Array Element");
-    printf("\n6.Search Array Element");
-    printf("\n7.Append Element");
-    printf("\n8.Exit");
+    printf("\n2.Print Array Element");
+    printf("\n3.Update Array Element");
+    printf("\n4.Delete Array Element");
+    printf("\n5.Search Array Element");
+    printf("\n6.Append Element");
+    printf("\n10.Exit");
 
     printf("\n\nChoose Operation(Enter List number):");
     scanf("%hi",&list);///I written wrong formate specifier of short int as %d instead of %hi which caused program to crash(value of "a" pointer gets corrupted).
@@ -176,42 +179,39 @@ while(1)
         insertArray(index,data,a);
         break;
     case 2:
-        printf("Array Elements:");
-        displayAllArray(a);
-        break;
-    case 3:
         printf("Enter Index of Array Element to Display");
         scanf("%d",&index);
-        printArrayElement(index,a);
+        printf("Element:%d",getElement(index,a));
         break;
-    case 4:
+    case 3:
         printf("Enter Index of array Element to Update:");
         scanf("%d",&index);
         printf("Enter Data:");
         scanf("%d",&data);
         editArray(index,data,a);
         break;
-    case 5:
+    case 4:
         printf("Enter Index of array element to Remove:");
         scanf("%d",&index);
         deleteArrayElement(index,a);
         break;
-    case 6:
+    case 5:
         printf("Enter value to search in:");
         scanf("%d",&data);
         searchElement(data,a);
         break;
-    case 7:
+    case 6:
         printf("Enter value to append data in array:");
         scanf("%d",&data);
         appendElement(data,a);
         break;
-    case 8:
+    case 10:
+        free(a->p);
         free(a);
         getch();
         exit(0);
     default:
-        printf("Enter Value 1 to 8");
+        printf("Enter Value 1 to 6 or 10");
     }
   getch();
   system("cls");
