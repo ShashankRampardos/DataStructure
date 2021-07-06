@@ -72,7 +72,7 @@ void insertParticular(int item,int listNo,Node **s)
     }
     else if(listNo==1)
     {
-        p->link=(*s)->link;
+        p->link=(*s);
         *s=p;
     }
     else{
@@ -227,7 +227,7 @@ printf("\n1.Insert First Node\n");
 printf("2.Insert Last Node\n");
 printf("3.Insert Particular Node\n");
 printf("4.Delete First Node\n");
-printf("5.Delete Last Node\n");///problem AND countElement problem
+printf("5.Delete Last Node\n");
 printf("6.Delete Particular Node\n");
 printf("7.Get a List Data\n");
 printf("8.Edit List Item\n");
