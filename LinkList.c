@@ -38,6 +38,7 @@ void editParticular(int item,int listNo,Node **s)
     if(*s==NULL)
     {
        printf("\nList is empty");
+        getch();
     }
     else{
     int cnt=1;
@@ -293,8 +294,9 @@ case 10:
   //free(start);
     getch();
     exit(0);
-default:
+default:   
     printf("Enter number 1 to 7 or 10\n");
+        getch();
 
 }
 
